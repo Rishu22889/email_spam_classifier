@@ -2,11 +2,11 @@
 const emailText = document.getElementById('emailText');
 const classifyBtn = document.getElementById('classifyBtn');
 const loadingSection = document.getElementById('loadingSection');
-const resultSection = document.getElementById('resultSection');
-const resultIcon = document.getElementById('resultIcon');
-const resultTitle = document.getElementById('resultTitle');
-const resultBadge = document.getElementById('resultBadge');
-const resultConfidence = document.getElementById('resultConfidence');
+const resultSection = document.getElementById('result-section');
+const resultIcon = document.getElementById('result-icon');
+const resultTitle = document.getElementById('result-title');
+const resultBadge = document.getElementById('result-badge');
+const resultConfidence = document.getElementById('result-confidence');
 
 // ===== Event Listeners =====
 classifyBtn.addEventListener('click', classifyEmail);
@@ -71,24 +71,23 @@ async function classifyEmail() {
  * Display classification result with animations
  */
 function displayResult(prediction, confidence) {
-    const isScam = prediction === 'Scam';
-
-    // Elements
-    const resultSection = document.getElementById('result-section');
-    const resultIcon = document.getElementById('result-icon');
-    const resultTitle = document.getElementById('result-title');
-    const resultBadge = document.getElementById('result-badge');
-    const resultConfidence = document.getElementById('result-confidence');
+    const isScam = prediction === 'Scam' || prediction === 'scam';
 
     // Update icon
     resultIcon.className = isScam ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
-    resultIcon.classList.add(isScam ? 'scam' : 'safe');
+    if (isScam) {
+        resultIcon.classList.add('scam');
+        resultIcon.classList.remove('safe');
+    } else {
+        resultIcon.classList.add('safe');
+        resultIcon.classList.remove('scam');
+    }
 
     // Update title
     resultTitle.textContent = 'Classification Result';
 
     // Update badge
-    resultBadge.textContent = prediction;
+    resultBadge.textContent = isScam ? 'Scam Email' : 'Safe Email';
     resultBadge.className = 'result-badge ' + (isScam ? 'scam' : 'safe');
 
     // Update confidence
@@ -100,19 +99,20 @@ function displayResult(prediction, confidence) {
 
     // Show result section with fade-in animation
     resultSection.style.display = 'block';
-    resultSection.classList.remove('animate__fadeIn'); // reset
+    resultSection.classList.remove('animate__fadeIn');
     void resultSection.offsetWidth; // trigger reflow
-    resultSection.classList.add('animate__fadeIn');
+    resultSection.classList.add('animate__animated', 'animate__fadeIn');
 
     // Add glow effect
     resultSection.style.boxShadow = isScam
-        ? '0 0 30px rgba(220, 53, 69, 0.3)'
-        : '0 0 30px rgba(40, 167, 69, 0.3)';
+        ? '0 0 30px rgba(239, 68, 68, 0.3)'
+        : '0 0 30px rgba(16, 185, 129, 0.3)';
 
     // Scroll to result smoothly
-    resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setTimeout(() => {
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }
-
 
 /**
  * Show loading animation
@@ -131,6 +131,7 @@ function hideLoading() {
     classifyBtn.disabled = false;
     classifyBtn.innerHTML = '<i class="fas fa-search me-2"></i>Classify Email';
     loadingSection.style.display = 'none';
+    loadingSection.classList.remove('animate__animated', 'animate__fadeIn');
 }
 
 /**
@@ -139,7 +140,6 @@ function hideLoading() {
 function hideResult() {
     resultSection.style.display = 'none';
     resultSection.style.boxShadow = 'none';
-    // Remove animation classes
     resultSection.classList.remove('animate__animated', 'animate__fadeIn');
 }
 
@@ -196,22 +196,23 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 let lastScroll = 0;
 const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
+if (navbar) {
+    navbar.style.transition = 'transform 0.3s ease';
     
-    if (currentScroll > lastScroll && currentScroll > 80) {
-        // Scrolling down
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        // Scrolling up
-        navbar.style.transform = 'translateY(0)';
-    }
-    
-    lastScroll = currentScroll;
-});
-
-// Add transition to navbar
-navbar.style.transition = 'transform 0.3s ease';
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > lastScroll && currentScroll > 80) {
+            // Scrolling down
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            // Scrolling up
+            navbar.style.transform = 'translateY(0)';
+        }
+        
+        lastScroll = currentScroll;
+    });
+}
 
 /**
  * Initialize animations on page load
@@ -231,18 +232,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Add focus effect to textarea
-    emailText.addEventListener('focus', () => {
-        emailText.parentElement.style.transform = 'scale(1.01)';
-        emailText.parentElement.style.transition = 'transform 0.3s ease';
-    });
-    
-    emailText.addEventListener('blur', () => {
-        emailText.parentElement.style.transform = 'scale(1)';
-    });
+    if (emailText) {
+        emailText.addEventListener('focus', () => {
+            emailText.parentElement.style.transform = 'scale(1.01)';
+            emailText.parentElement.style.transition = 'transform 0.3s ease';
+        });
+        
+        emailText.addEventListener('blur', () => {
+            emailText.parentElement.style.transform = 'scale(1)';
+        });
+    }
 });
 
 /**
- * Add particle effect on button click (optional enhancement)
+ * Add particle effect on button click
  */
 classifyBtn.addEventListener('click', (e) => {
     // Create ripple effect
@@ -264,56 +267,9 @@ classifyBtn.addEventListener('click', (e) => {
     }, 600);
 });
 
-// Add ripple animation to CSS dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes ripple {
-        from {
-            transform: scale(0);
-            opacity: 1;
-        }
-        to {
-            transform: scale(2);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
 /**
- * Add sample email on button click (for testing)
+ * Keyboard shortcuts
  */
-function loadSampleScamEmail() {
-    emailText.value = `Dear Valued Customer,
-
-URGENT ACTION REQUIRED!
-
-Your account has been suspended due to unusual activity. We need you to verify your identity immediately to avoid permanent account closure.
-
-Click here to confirm your details: http://suspicious-link.com/verify
-
-You have won $10,000 in our lottery! Claim your prize now by providing your bank account details.
-
-This is a limited time offer. Act now or lose access forever!
-
-Regards,
-Security Team`;
-}
-
-function loadSampleSafeEmail() {
-    emailText.value = `Hi there,
-
-Thank you for your recent purchase from our store. Your order #12345 has been confirmed and will be shipped within 2-3 business days.
-
-You can track your order using the link in your account dashboard.
-
-If you have any questions, feel free to reply to this email.
-
-Best regards,
-Customer Service Team`;
-}
-
-// Add keyboard shortcuts (optional)
 document.addEventListener('keydown', (e) => {
     // Ctrl+K or Cmd+K to focus on textarea
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -331,31 +287,33 @@ document.addEventListener('keydown', (e) => {
 /**
  * Auto-resize textarea based on content
  */
-emailText.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-});
+if (emailText) {
+    emailText.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+}
 
 /**
- * Add character counter (optional)
+ * Add character counter
  */
-emailText.addEventListener('input', function() {
-    const charCount = this.value.length;
-    const formText = this.nextElementSibling;
-    
-    if (charCount > 0) {
-        formText.innerHTML = `
-            <i class="fas fa-info-circle"></i> 
-            ${charCount} characters | Paste the complete email content for best results
-        `;
-    } else {
-        formText.innerHTML = `
-            <i class="fas fa-info-circle"></i> 
-            Paste the complete email content for best results
-        `;
-    }
-});
-
-console.log('🚀 Email Scam Classifier loaded successfully!');
-console.log('💡 Tip: Press Ctrl+K to focus on the textarea');
-console.log('💡 Tip: Press Ctrl+Enter to classify the email');
+if (emailText) {
+    emailText.addEventListener('input', function() {
+        const charCount = this.value.length;
+        const formText = this.nextElementSibling;
+        
+        if (formText && formText.classList.contains('form-text')) {
+            if (charCount > 0) {
+                formText.innerHTML = `
+                    <i class="fas fa-info-circle"></i> 
+                    ${charCount} characters | Paste the complete email content for best results
+                `;
+            } else {
+                formText.innerHTML = `
+                    <i class="fas fa-info-circle"></i> 
+                    Paste the complete email content for best results
+                `;
+            }
+        }
+    });
+}
