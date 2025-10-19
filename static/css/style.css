@@ -164,27 +164,57 @@ body::after {
 }
 
 /* ===== Result Section ===== */
+/* Card container */
 .result-card {
     background: rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 30px;
     backdrop-filter: blur(20px);
-    animation: fadeInUp 0.6s ease;
+    animation: fadeInUp 0.6s ease forwards;
 }
 
+/* Fade-in-up animation */
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Result badge styles */
+.result-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Scam / Safe badge colors and glow */
 .result-badge.scam {
     background: linear-gradient(90deg, #ef4444, #dc2626);
-    box-shadow: 0 0 25px rgba(239,68,68,0.4);
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
 }
+
 .result-badge.safe {
     background: linear-gradient(90deg, #10b981, #059669);
-    box-shadow: 0 0 25px rgba(16,185,129,0.4);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
 }
+
+/* Optional icon coloring */
+#result-icon.scam {
+    color: #dc2626;
+}
+#result-icon.safe {
+    color: #10b981;
+}
+
+/* Confidence text */
+#result-confidence {
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
 
 /* ===== Footer ===== */
 footer {
