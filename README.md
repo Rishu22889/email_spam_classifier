@@ -7,6 +7,14 @@ An AI-powered web application that detects spam and phishing emails using Machin
 ![scikit--learn](https://img.shields.io/badge/scikit--learn-1.7.2-orange)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
+
+
+---
+
+🌍 **Live Demo:**  
+[![Visit Now](https://img.shields.io/badge/Visit%20App-Click%20Here-blueviolet?style=for-the-badge&logo=vercel&logoColor=white)](https://email-spam-classifier-7pct.onrender.com/)
+
+
 ## 🌟 Features
 
 - ✅ **Real-time Email Classification** - Instant spam/scam detection
