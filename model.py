@@ -89,9 +89,9 @@ def classify_email(text):
             
             # Your model outputs: 0 = ham (not scam), 1 = spam (scam)
             if prediction == 1:
-                return "Spam"
+                return "Scam"
             else:
-                return "Not Spam"
+                return "Safe"
         
         except Exception as e:
             print(f"❌ Prediction error: {e}")
@@ -124,7 +124,7 @@ def get_prediction_confidence(text):
             confidence = proba[prediction_idx]
             
             # Convert to label
-            prediction = "Spam" if prediction_idx == 1 else "Not Spam"
+            prediction = "Scam" if prediction_idx == 1 else "Safe"
             
             return prediction, float(confidence)
         
@@ -156,7 +156,7 @@ def fallback_classification(text):
     scam_score = sum(1 for keyword in scam_keywords if keyword in text_lower)
     
     # If 3 or more scam keywords detected, classify as scam
-    return "Spam" if scam_score >= 3 else "Not Spam"
+    return "Scam" if scam_score >= 3 else "Safe"
 
 
 def get_model_info():
