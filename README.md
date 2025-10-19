@@ -69,7 +69,7 @@ An AI-powered web application that detects spam and phishing emails using Machin
 1. **Clone the repository**
 ```bash
 git clone https://github.com/Rishu22889/email_spam_classifier.git
-cd email-scam-classifier
+cd email_spam_classifier
 ```
 
 2. **Create and activate virtual environment**
@@ -101,7 +101,7 @@ http://127.0.0.1:5000
 ## 📁 Project Structure
 
 ```
-email-spam-classifier/
+email-scam-classifier/
 ├── app.py                      # Flask application
 ├── model.py                    # ML model loader and predictor
 ├── preprocessor.py             # Email preprocessing class
@@ -313,9 +313,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+- GitHub: [@Rishu22889](https://github.com/Rishu22889)
+- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/risuraj/)
+- Email: rk1258106@gmail.com
 
 ## 🙏 Acknowledgments
 
@@ -326,7 +326,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 If you have any questions or issues, please:
-1. Check the [Issues](https://github.com/yourusername/email-scam-classifier/issues) page
+1. Check the [Issues](https://github.com/Rishu22889/email_spam_classifier/issues) page
 2. Create a new issue with detailed description
 3. Contact via email
 
@@ -356,4 +356,4 @@ If you have any questions or issues, please:
 
 **⭐ If you find this project helpful, please give it a star!**
 
-Made with 💻 and ☕ by [Your Name]
+Made with 💻 and ☕ by Rishi Singh
