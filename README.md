@@ -312,9 +312,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Rishi Singh**
 - GitHub: [@Rishu22889](https://github.com/Rishu22889)
-- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/risuraj/)
+- LinkedIn: [Rishi Singh](https://www.linkedin.com/in/risuraj/)
 - Email: rk1258106@gmail.com
 
 ## 🙏 Acknowledgments
