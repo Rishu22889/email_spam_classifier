@@ -71,41 +71,48 @@ async function classifyEmail() {
  * Display classification result with animations
  */
 function displayResult(prediction, confidence) {
-    // Determine if scam or safe
     const isScam = prediction === 'Scam';
-    
+
+    // Elements
+    const resultSection = document.getElementById('result-section');
+    const resultIcon = document.getElementById('result-icon');
+    const resultTitle = document.getElementById('result-title');
+    const resultBadge = document.getElementById('result-badge');
+    const resultConfidence = document.getElementById('result-confidence');
+
     // Update icon
     resultIcon.className = isScam ? 'fas fa-exclamation-triangle' : 'fas fa-check-circle';
     resultIcon.classList.add(isScam ? 'scam' : 'safe');
-    
+
     // Update title
     resultTitle.textContent = 'Classification Result';
-    
+
     // Update badge
     resultBadge.textContent = prediction;
     resultBadge.className = 'result-badge ' + (isScam ? 'scam' : 'safe');
-    
+
     // Update confidence
     const confidencePercent = (confidence * 100).toFixed(1);
     resultConfidence.innerHTML = `
         <i class="fas fa-chart-line me-2"></i>
         Confidence: <strong>${confidencePercent}%</strong>
     `;
-    
-    // Show result section with animation
+
+    // Show result section with fade-in animation
     resultSection.style.display = 'block';
-    resultSection.classList.add('animate__animated', 'animate__fadeIn');
-    
-    // Add glow effect based on result
-    if (isScam) {
-        resultSection.style.boxShadow = '0 0 30px rgba(220, 53, 69, 0.3)';
-    } else {
-        resultSection.style.boxShadow = '0 0 30px rgba(40, 167, 69, 0.3)';
-    }
-    
+    resultSection.classList.remove('animate__fadeIn'); // reset
+    void resultSection.offsetWidth; // trigger reflow
+    resultSection.classList.add('animate__fadeIn');
+
+    // Add glow effect
+    resultSection.style.boxShadow = isScam
+        ? '0 0 30px rgba(220, 53, 69, 0.3)'
+        : '0 0 30px rgba(40, 167, 69, 0.3)';
+
     // Scroll to result smoothly
     resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
 
 /**
  * Show loading animation
